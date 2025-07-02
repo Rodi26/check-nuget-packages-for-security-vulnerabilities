@@ -42,10 +42,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     
-    - name: Install Mono
+    - name: Install Mono and NuGet
       run: |
         sudo apt-get update
-        sudo apt-get install -y mono-complete
+        sudo apt-get install -y mono-complete nuget
     
     - name: Configure NuGet for JFrog
       run: |
