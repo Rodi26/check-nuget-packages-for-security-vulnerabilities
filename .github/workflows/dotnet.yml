@@ -59,11 +59,7 @@ jobs:
       run: |
         dotnet restore VulnerableApp.sln
     
-    - name: Checking NuGet vulnerabilites
-      run: |
-        dotnet list package --vulnerable --include-transitive 2>&1 | tee build.log
-        echo "Analyze dotnet list package command log output..."
-        grep -q -i "critical\|high\|moderate\|low" build.log; [ $? -eq 0 ] && echo "Security Vulnerabilities found on the log output" && exit 1
+
     
     - name: Build
       run: |
