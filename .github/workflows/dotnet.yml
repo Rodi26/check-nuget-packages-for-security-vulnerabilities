@@ -38,6 +38,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     
+    - name: Configure NuGet for JFrog
+      run: |
+        jf nuget-config --repo-resolve soleng-dev-nuget --server-id-resolve ${{ secrets.JFROG_INSTANCE_ID }}
+    
     - name: Restore dependencies with JFrog
       run: |
         jf nuget restore --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
