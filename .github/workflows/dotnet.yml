@@ -25,6 +25,8 @@ jobs:
     env:
       JF_URL: ${{ secrets.JFROG_URL }}
       JF_BUILD_NUMBER: ${{ github.run_number }}
+      SSL_CERT_DIR: /etc/ssl/certs
+      SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
     steps:
     - uses: actions/checkout@v3
     
@@ -40,14 +42,12 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: |
-          5.0.x
-          8.0.x
+        dotnet-version: 8.0.x
     
     - name: Install Mono, NuGet and SSL dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y mono-complete libssl-dev libssl3
+        sudo apt-get install -y mono-complete libssl-dev libssl3 openssl ca-certificates
         # Install NuGet CLI
         curl -o nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
         sudo mv nuget.exe /usr/local/bin/
