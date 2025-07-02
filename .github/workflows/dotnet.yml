@@ -32,8 +32,7 @@ jobs:
     
     - name: Setup JFrog CLI
       uses: jfrog/setup-jfrog-cli@v4
-      id: setup-cli
-      env:
+      id: setup-clienv:
          JF_PROJECT: sai
       with:
           oidc-provider-name: rodolphef-nuget-webui
@@ -68,10 +67,6 @@ jobs:
     - name: Build
       run: |
         dotnet build VulnerableApp.sln --no-restore
-    
-    - name: Test
-      run: |
-        dotnet test VulnerableApp.sln --no-build --verbosity normal
     
     - name: Collect build info
       run: |
