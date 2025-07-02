@@ -63,15 +63,13 @@ jobs:
       run: |
         jf dotnet-config --repo-resolve soleng-dev-nuget
     
-    - name: Restore dependencies
+    - name: Restore dependencies with JFrog
       run: |
-        dotnet restore VulnerableApp.sln
+        jf dotnet restore VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
     
-
-    
-    - name: Build
+    - name: Build with JFrog
       run: |
-        dotnet build VulnerableApp.sln --no-restore
+        jf dotnet build VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
     
     - name: Collect build info
       run: |
