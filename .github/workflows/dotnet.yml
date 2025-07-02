@@ -32,7 +32,8 @@ jobs:
     
     - name: Setup JFrog CLI
       uses: jfrog/setup-jfrog-cli@v4
-      id: setup-clienv:
+      id: setup-cli
+      env:
          JF_PROJECT: sai
       with:
           oidc-provider-name: rodolphef-nuget-webui
