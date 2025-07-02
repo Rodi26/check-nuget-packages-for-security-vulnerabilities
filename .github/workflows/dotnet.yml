@@ -8,23 +8,54 @@ on:
     
   workflow_dispatch:
 
+env:
+  JFROG_CLI_LOG_LEVEL: DEBUG
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Setup JFrog CLI
+      uses: jfrog/setup-jfrog-cli@v4
+      id: setup-cli
+      env:
+         JF_PROJECT: sai
+      with:
+          oidc-provider-name: rodolphef-nuget-webui
+          oidc-audience: rodolphef-lollms-nuget-audience
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+    
+    - name: Restore dependencies with JFrog
+      run: |
+        jf nuget restore --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+    
     - name: Checking NuGet vulnerabilites
       run: |
         dotnet list package --vulnerable --include-transitive 2>&1 | tee build.log
         echo "Analyze dotnet list package command log output..."
         grep -q -i "critical\|high\|moderate\|low" build.log; [ $? -eq 0 ] && echo "Security Vulnerabilities found on the log output" && exit 1
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    
+    - name: Build with JFrog
+      run: |
+        jf dotnet build --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+    
+    - name: Test with JFrog
+      run: |
+        jf dotnet test --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+    
+    - name: Publish build info
+      run: |
+        jf rt build-collect-env 
+        jf rt build-add-dependencies .
+        jf rt build-add-git
+        jf rt build-publish vulnerable-app ${{ github.run_number }}

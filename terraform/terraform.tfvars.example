@@ -1,0 +1,18 @@
+# GitHub Configuration
+# github_token will be read from GITHUB_TOKEN environment variable
+github_owner     = "your-github-username"
+github_repository = "check-nuget-packages-for-security-vulnerabilities"
+
+# JFrog Artifactory Configuration
+jfrog_url        = "https://your-instance.jfrog.io"
+# jfrog_token will be read from JFROG_TOKEN environment variable
+jfrog_instance_id = "your-instance"
+
+# Optional Configuration (these have defaults)
+project_key      = "sai"
+virtual_repo_name = "soleng-dev-nuget"
+oidc_provider_name = "rodolphef-nuget-webui"
+oidc_audience     = "rodolphef-lollms-nuget-audience"
+oidc_identity_mapping = "github-actions-identity-mapping"
+
+ 
