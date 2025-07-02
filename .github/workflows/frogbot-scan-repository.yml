@@ -31,8 +31,9 @@ jobs:
           JF_DEPS_REPO: soleng-dev-nuget
 
         with:
-          oidc-provider-name: rodolphef-lollms-webui
-          oidc-audience: rodolphef-lollms-webui-audience
+          oidc-provider-name: rodolphef-nuget-webui
+          oidc-audience: rodolphef-lollms-nuget-audience
+
             # [Mandatory if JF_ACCESS_TOKEN is not provided]
             # JFrog username with 'read' permissions for Xray. Must be provided with JF_PASSWORD
           # JF_USER: ${{ secrets.JF_USER }}

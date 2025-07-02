@@ -36,8 +36,8 @@ jobs:
       env:
          JF_PROJECT: sai
       with:
-          oidc-provider-name: rodolphef-lollms-webui
-          oidc-audience: rodolphef-lollms-webui-audience
+          oidc-provider-name: rodolphef-nuget-webui
+          oidc-audience: rodolphef-lollms-nuget-audienc
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
