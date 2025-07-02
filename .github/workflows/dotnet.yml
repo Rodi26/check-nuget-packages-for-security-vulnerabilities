@@ -59,6 +59,10 @@ jobs:
       run: |
         jf nuget-config --repo-resolve soleng-dev-nuget
     
+    - name: Configure .NET for JFrog
+      run: |
+        jf dotnet-config --repo-resolve soleng-dev-nuget
+    
     - name: Restore dependencies
       run: |
         dotnet restore VulnerableApp.sln
