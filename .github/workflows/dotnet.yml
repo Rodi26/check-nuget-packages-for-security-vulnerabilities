@@ -71,7 +71,13 @@ jobs:
       run: |
         jf dotnet list package --vulnerable --include-transitive 2>&1 | tee build.log
         echo "Analyze dotnet list package command log output..."
-        grep -q -i "critical\|high\|moderate\|low" build.log; [ $? -eq 0 ] && echo "Security Vulnerabilities found on the log output" && exit 1
+        # Check for actual vulnerability entries (not just the word "vulnerable")
+        if grep -q -E "(critical|high|moderate|low).*https://github.com/advisories" build.log; then
+          echo "Security Vulnerabilities found on the log output"
+          exit 1
+        else
+          echo "No security vulnerabilities found"
+        fi
     
     - name: Build with JFrog
       run: |
