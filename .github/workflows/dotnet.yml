@@ -57,7 +57,7 @@ jobs:
     
     - name: Restore dependencies with JFrog
       run: |
-        jf nuget restore --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        jf nuget restore VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
     
     - name: Checking NuGet vulnerabilites
       run: |
@@ -67,11 +67,11 @@ jobs:
     
     - name: Build with JFrog
       run: |
-        jf dotnet build --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        jf dotnet build VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
     
     - name: Test with JFrog
       run: |
-        jf dotnet test --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        jf dotnet test VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
     
     - name: Publish build info
       run: |
