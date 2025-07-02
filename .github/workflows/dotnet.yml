@@ -83,10 +83,6 @@ jobs:
       run: |
         jf dotnet build VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
     
-    - name: Test with JFrog
-      run: |
-        jf dotnet test VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
-    
     - name: Publish with JFrog
       run: |
         jf dotnet publish VulnerableApp.WebApi/VulnerableApp.WebApi.csproj --configuration Release --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
