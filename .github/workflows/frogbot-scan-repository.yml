@@ -29,38 +29,24 @@ jobs:
           JF_GIT_BASE_BRANCH: ${{ matrix.branch }}
           JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JF_DEPS_REPO: soleng-dev-nuget
+          
+          # Configuration pour SAST, SCA et Secret Detection uniquement
+          # Désactiver les autres types de scan
+          JF_IAC_SCAN: "false"
+          JF_CONTAINER_SCAN: "false"
+          
+          # Configuration des vulnérabilités
+          JF_MIN_SEVERITY: "MEDIUM"
+          JF_FAIL_ON_SEVERITY: "HIGH"
+          
+          # Configuration des rapports
+          JF_OUTPUT_FORMAT: "json"
+          JF_INCLUDE_LICENSE_VIOLATIONS: "false"
+          JF_INCLUDE_VULNERABILITIES: "true"
 
         with:
           oidc-provider-name: rodolphef-nuget-webui
           oidc-audience: rodolphef-lollms-nuget-audience
-          
-          # Configuration pour SAST, SCA et Secret Detection uniquement
-          scan-type: "sast,sca,secrets"
-          
-          # Configuration SAST
-          sast-include-patterns: "**/*.cs,**/*.csproj,**/*.sln"
-          sast-exclude-patterns: "**/bin/**,**/obj/**,**/node_modules/**"
-          
-          # Configuration SCA (Software Composition Analysis)
-          sca-include-patterns: "**/*.csproj,**/*.sln,**/packages.config,**/*.props"
-          sca-exclude-patterns: "**/bin/**,**/obj/**,**/node_modules/**"
-          
-          # Configuration Secret Detection
-          secrets-include-patterns: "**/*.cs,**/*.json,**/*.yml,**/*.yaml,**/*.config"
-          secrets-exclude-patterns: "**/bin/**,**/obj/**,**/node_modules/**,**/packages/**"
-          
-          # Désactiver les autres types de scan
-          iac-scan: false
-          container-scan: false
-          
-          # Configuration des vulnérabilités
-          min-severity: "MEDIUM"
-          fail-on-severity: "HIGH"
-          
-          # Configuration des rapports
-          output-format: "json"
-          include-license-violations: false
-          include-vulnerabilities: true
 
       - name: Check Frogbot Exit Code
         if: failure()
