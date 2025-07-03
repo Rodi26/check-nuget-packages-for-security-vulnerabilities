@@ -1,0 +1,19 @@
+version: 1
+scanRepository:
+  git:
+    baseBranch: "main"
+  scanners:
+    - name: "nuget"
+      type: "nuget"
+      restoreDependencies: true
+  # Configuration des rapports
+  outputFormat: "json"
+  includeLicenseViolations: false
+  includeVulnerabilities: true
+  # Configuration des seuils
+  minSeverity: "MEDIUM"
+  failOnSeverity: "HIGH"
+  # Types de scan désactivés
+  iacScan: false
+  containerScan: false
+  # Types de scan activés par défaut : SAST, SCA, Secrets 

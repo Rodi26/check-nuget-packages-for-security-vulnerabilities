@@ -29,30 +29,8 @@ jobs:
           JF_GIT_BASE_BRANCH: ${{ matrix.branch }}
           JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JF_DEPS_REPO: soleng-dev-nuget
-          
-          # Configuration pour SAST, SCA et Secret Detection uniquement
-          # Désactiver les autres types de scan
-          JF_IAC_SCAN: "false"
-          JF_CONTAINER_SCAN: "false"
-          
-          # Configuration des vulnérabilités
-          JF_MIN_SEVERITY: "MEDIUM"
-          JF_FAIL_ON_SEVERITY: "HIGH"
-          
-          # Configuration des rapports
-          JF_OUTPUT_FORMAT: "json"
-          JF_INCLUDE_LICENSE_VIOLATIONS: "false"
-          JF_INCLUDE_VULNERABILITIES: "true"
-          
-          # Configuration OIDC pour éviter les erreurs 403
           JF_PROJECT: "sai"
           JF_WORKING_DIR: "."
-          
-          # Désactiver complètement la correction automatique
-          JF_FIXABLE_ONLY: "false"
-          JF_AUTO_FIX: "false"
-          JF_CREATE_FIX_PULL_REQUESTS: "false"
-          JF_SCAN_ONLY: "true"
 
         with:
           oidc-provider-name: rodolphef-nuget-webui
