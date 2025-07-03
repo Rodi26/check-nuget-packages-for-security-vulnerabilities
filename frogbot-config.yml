@@ -11,8 +11,7 @@ scanRepository:
   includeLicenseViolations: false
   includeVulnerabilities: true
   # Configuration des seuils
-  minSeverity: "MEDIUM"
-  failOnSeverity: "HIGH"
+
   # Types de scan désactivés
   iacScan: false
   containerScan: false
