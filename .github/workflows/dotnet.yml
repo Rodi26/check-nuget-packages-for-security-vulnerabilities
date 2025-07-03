@@ -37,7 +37,7 @@ jobs:
          JF_PROJECT: sai
       with:
           oidc-provider-name: rodolphef-nuget-webui
-          oidc-audience: rodolphef-lollms-nuget-audienc
+          oidc-audience: rodolphef-lollms-nuget-audience
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
