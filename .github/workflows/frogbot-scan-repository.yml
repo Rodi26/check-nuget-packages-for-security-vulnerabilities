@@ -43,6 +43,10 @@ jobs:
           JF_OUTPUT_FORMAT: "json"
           JF_INCLUDE_LICENSE_VIOLATIONS: "false"
           JF_INCLUDE_VULNERABILITIES: "true"
+          
+          # Configuration OIDC pour éviter les erreurs 403
+          JF_PROJECT: "sai"
+          JF_WORKING_DIR: "."
 
         with:
           oidc-provider-name: rodolphef-nuget-webui
