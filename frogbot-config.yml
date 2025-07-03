@@ -16,4 +16,5 @@ scanRepository:
   # Types de scan désactivés
   iacScan: false
   containerScan: false
-  # Types de scan activés par défaut : SAST, SCA, Secrets 
+  # Types de scan activés par défaut : SAST, SCA, Secrets
+  # Frogbot créera automatiquement des PR pour corriger les vulnérabilités 
