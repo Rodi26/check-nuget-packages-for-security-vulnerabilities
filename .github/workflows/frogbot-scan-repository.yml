@@ -48,9 +48,11 @@ jobs:
           JF_PROJECT: "sai"
           JF_WORKING_DIR: "."
           
-          # Désactiver la correction automatique des vulnérabilités
+          # Désactiver complètement la correction automatique
           JF_FIXABLE_ONLY: "false"
           JF_AUTO_FIX: "false"
+          JF_CREATE_FIX_PULL_REQUESTS: "false"
+          JF_SCAN_ONLY: "true"
 
         with:
           oidc-provider-name: rodolphef-nuget-webui
