@@ -47,6 +47,10 @@ jobs:
           # Configuration OIDC pour éviter les erreurs 403
           JF_PROJECT: "sai"
           JF_WORKING_DIR: "."
+          
+          # Désactiver la correction automatique des vulnérabilités
+          JF_FIXABLE_ONLY: "false"
+          JF_AUTO_FIX: "false"
 
         with:
           oidc-provider-name: rodolphef-nuget-webui
