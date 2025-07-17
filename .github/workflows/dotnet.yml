@@ -57,11 +57,11 @@ jobs:
     
     - name: Configure NuGet for JFrog
       run: |
-        jf nuget-config --repo-resolve soleng-dev-nuget
+        jf nuget-config --repo-resolve soleng-dev-nuget --repo-deploy soleng-dev-nuget
     
     - name: Configure .NET for JFrog
       run: |
-        jf dotnet-config --repo-resolve soleng-dev-nuget
+        jf dotnet-config --repo-resolve soleng-dev-nuget --repo-deploy soleng-dev-nuget
     
     - name: Restore dependencies with JFrog
       run: |
@@ -102,8 +102,8 @@ jobs:
     
     - name: Publish NuGet packages to JFrog
       run: |
-        # Publish NuGet packages to the NuGet repository
-        jf dotnet nuget push "./artifacts/packages/*.nupkg" --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        # Publish NuGet packages using JFrog RT upload with NuGet repository
+        jf rt upload "./artifacts/packages/*.nupkg" soleng-dev-nuget/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --flat=false
     
     - name: Upload artifacts to JFrog
       run: |
