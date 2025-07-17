@@ -106,11 +106,11 @@ jobs:
         jf rt upload "./artifacts/packages/*.nupkg" soleng-dev-nuget/vulnerable-app/${{ github.run_number }}/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
         
         # Upload web application artifacts to generic repository
-        jf rt upload "./artifacts/webapp/*" soleng-dev-generic/vulnerable-app/${{ github.run_number }}/webapp/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
+        jf rt upload "./artifacts/webapp/*" soleng-dev-generic-local/vulnerable-app/${{ github.run_number }}/webapp/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
         
         # Upload build artifacts (DLLs, PDBs) to generic repository
-        jf rt upload "src/**/bin/Release/**/*.dll" soleng-dev-generic/vulnerable-app/${{ github.run_number }}/binaries/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
-        jf rt upload "src/**/bin/Release/**/*.pdb" soleng-dev-generic/vulnerable-app/${{ github.run_number }}/symbols/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
+        jf rt upload "src/**/bin/Release/**/*.dll" soleng-dev-generic-local/vulnerable-app/${{ github.run_number }}/binaries/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
+        jf rt upload "src/**/bin/Release/**/*.pdb" soleng-dev-generic-local/vulnerable-app/${{ github.run_number }}/symbols/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
     
     - name: Collect build info
       run: |
