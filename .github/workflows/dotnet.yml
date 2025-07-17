@@ -100,11 +100,13 @@ jobs:
         mkdir -p ./artifacts/webapp
         cp -r src/VulnerableApp.WebApi/bin/Release/net5.0/publish/* ./artifacts/webapp/
     
+    - name: Publish NuGet packages to JFrog
+      run: |
+        # Publish NuGet packages to the NuGet repository
+        jf dotnet nuget push "./artifacts/packages/*.nupkg" --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+    
     - name: Upload artifacts to JFrog
       run: |
-        # Upload NuGet packages to repository
-        jf rt upload "./artifacts/packages/*.nupkg" soleng-dev-nuget/vulnerable-app/${{ github.run_number }}/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
-        
         # Upload web application artifacts to generic repository
         jf rt upload "./artifacts/webapp/*" soleng-dev-generic-local/vulnerable-app/${{ github.run_number }}/webapp/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
         
