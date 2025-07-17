@@ -57,7 +57,7 @@ jobs:
     
     - name: Configure NuGet for JFrog
       run: |
-        jf nuget-config --repo-resolve soleng-dev-nuget --repo-deploy soleng-dev-nuget
+        jf nuget-config --repo-resolve soleng-dev-nuget 
     
     - name: Configure .NET for JFrog
       run: |
