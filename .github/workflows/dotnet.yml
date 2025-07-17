@@ -61,7 +61,7 @@ jobs:
     
     - name: Configure .NET for JFrog
       run: |
-        jf dotnet-config --repo-resolve soleng-dev-nuget --repo-deploy soleng-dev-nuget
+        jf dotnet-config --repo-resolve soleng-dev-nuget 
     
     - name: Restore dependencies with JFrog
       run: |
