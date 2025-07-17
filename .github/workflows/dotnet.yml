@@ -67,7 +67,7 @@ jobs:
       run: |
         jf dotnet restore VulnerableApp.sln --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
     
-    - name: Check NuGet vulnerabilities with JFrog
+    - name: Check for vulnerabilities
       run: |
         jf dotnet list package --vulnerable --include-transitive 2>&1 | tee build.log
         echo "Analyze dotnet list package command log output..."
@@ -86,6 +86,31 @@ jobs:
     - name: Publish with JFrog
       run: |
         jf dotnet publish src/VulnerableApp.WebApi/VulnerableApp.WebApi.csproj --configuration Release --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+    
+    - name: Package artifacts
+      run: |
+        # Create NuGet packages for libraries
+        jf dotnet pack src/VulnerableApp.Core.Extensions/VulnerableApp.Core.Extensions.csproj --configuration Release --output ./artifacts/packages --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        jf dotnet pack src/VulnerableApp.Library.Contracts/VulnerableApp.Library.Contracts.csproj --configuration Release --output ./artifacts/packages --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        jf dotnet pack src/VulnerableApp.Library.Impl/VulnerableApp.Library.Impl.csproj --configuration Release --output ./artifacts/packages --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        jf dotnet pack src/VulnerableApp.Repository.Contracts/VulnerableApp.Repository.Contracts.csproj --configuration Release --output ./artifacts/packages --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        jf dotnet pack src/VulnerableApp.Repository.Impl/VulnerableApp.Repository.Impl.csproj --configuration Release --output ./artifacts/packages --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        
+        # Copy published web application
+        mkdir -p ./artifacts/webapp
+        cp -r src/VulnerableApp.WebApi/bin/Release/net5.0/publish/* ./artifacts/webapp/
+    
+    - name: Upload artifacts to JFrog
+      run: |
+        # Upload NuGet packages to repository
+        jf rt upload "./artifacts/packages/*.nupkg" soleng-dev-nuget/vulnerable-app/${{ github.run_number }}/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai
+        
+        # Upload web application artifacts to generic repository
+        jf rt upload "./artifacts/webapp/*" soleng-dev-generic/vulnerable-app/${{ github.run_number }}/webapp/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
+        
+        # Upload build artifacts (DLLs, PDBs) to generic repository
+        jf rt upload "src/**/bin/Release/**/*.dll" soleng-dev-generic/vulnerable-app/${{ github.run_number }}/binaries/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
+        jf rt upload "src/**/bin/Release/**/*.pdb" soleng-dev-generic/vulnerable-app/${{ github.run_number }}/symbols/ --build-name vulnerable-app --build-number ${{ github.run_number }} --project sai --recursive
     
     - name: Collect build info
       run: |
